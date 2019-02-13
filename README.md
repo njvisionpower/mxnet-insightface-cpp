@@ -3,8 +3,10 @@ This project implement an easy deployable face recognition pipeline with mxnet c
 ## Dependency lib
     Mxnet and opencv library 
 ## Operation
-### Make labels
+#### Make labels
     Extract features with images in "images" folder, and also will generate labels
+#### Face recognition with camera
+    Extract features from camera image and compare distance with labeled features.
 ## Framework
 This project implement face recognition pipeline with mxnet c++, and currently mainly optimize on CPU. The whole framework contains: 
 ### 1. Face detect with MTCNN
