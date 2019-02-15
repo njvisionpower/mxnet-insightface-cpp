@@ -26,11 +26,11 @@ MTCNN是一个级联网络(原始版本任意输入的PNet,24 * 24输入的RNet�
 ### 识别部分
 用insightface或者其他MXNet训练的模型抽取特征，比较人脸之间的欧式距离，进行人脸验证或者识别。注意的点：  
 
-**1**.注意MXNet中模型的输入通道是batch x channels x height x width，并且默认的通道是RGB，用opencv需要把默认的BGR转出RGB，然后按照通道的张量形式把数据喂给识别的网络  
+1. 注意MXNet中模型的输入通道是batch x channels x height x width，并且默认的通道是RGB，用opencv需要把默认的BGR转出RGB，然后按照通道的张量形式把数据喂给识别的网络  
 
-**2**.一张图像可能有多个人，更好的方法是组成batch，然后根据加载好的模型的batch数丢给网络抽取特征  
+2. 一张图像可能有多个人，更好的方法是组成batch，然后根据加载好的模型的batch数丢给网络抽取特征  
 
-**3**.抽取的特征要进行归一化，有助于提高识别率。
+3. 抽取的特征要进行归一化，有助于提高识别率  
 
 *****
 This project implement an easy deployable face recognition pipeline with mxnet cpp framework.There are some awesome projects aim to train and design face recognition pipeline with python(like insightface), this project show how to deploy the pre-trained model to real production environment with mxnet-cpp. Compare with original python version, our implement has some optimization and speed improvement around 1/3.
@@ -58,3 +58,9 @@ Feature extraction phase utilizes deep network to extract features from aligned 
 
 ## To be done
 Optimization for different batch to feed RNet, ONet and feature extract network. Batch of input number of images will save time than loop. For example the input number x channels x width x height will get speed up than 1 x channels x width x height with loop.
+
+## Reference
+1. [Insightface](https://github.com/deepinsight/insightface)  
+2. [Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Neural Networks](https://github.com/kpzhang93/MTCNN_face_detection_alignment)  
+3. [MXNET](https://github.com/apache/incubator-mxnet)  
+4. Least-squares estimation of transformation parameters between two point patterns
