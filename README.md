@@ -1,6 +1,14 @@
 # mxnet-insightface-cpp
+<p align="center"> 
+<img src="https://github.com/njvisionpower/mxnet-insightface-cpp/blob/master/demo.jpg" width = 60% height = 60%>
+</p>  
+
 ### 基础
 识别框架：MTCNN人脸检测+相似度变换进行对齐+识别网络抽取特征（比如性价比很高的**mobilefacenet**），i5-4590 CPU上**单线程**进行640 * 480人脸完整的识别过程(检测+对齐+识别)在30ms~40ms之间，这里要注意速度测试需要公平的环境，除硬件外比如线程数、你用的最小人脸大小、图像金字塔的缩放尺度、过滤人脸的置信度参数等等，并且级联的网络通常会有一定的波动，最大的原因是喂给RNet和ONet的proposal人脸的个数可能比较多，造成这两个网络的输入batch增多带来更多的开销，后面本项目会给出测试的具体时间。
+
+### 更新日志
+**2019-2-20  更新demo图片**
+
 ### 环境
     1.CPU和GPU都可以，主要对CPU进行优化，GPU后面补上~
     2.编译的MXNet库，看情况开启MKL，MKL-DNN或者openblas加速，速度会有不小提升，另外还需要预编译的OpenCV
