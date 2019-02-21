@@ -9,7 +9,7 @@ float norm_face[5][2] = {
 	{ 33.5493f + 8.0, 92.3655f },
 	{ 62.7299f + 8.0, 92.2041f } };
 
-//Normal face landmark for 112x90,
+//Normal face landmark for 112x96,
 float norm_face_2[5][2] = {
 	{ 30.2946f , 51.6963f },
 	{ 65.5318f, 51.5014f },
