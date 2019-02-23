@@ -1,4 +1,4 @@
-# mxnet-insightface-cpp
+# mxnet-insightface-cpp  [English](README.md)
 <p align="center"> 
 <img src="https://github.com/njvisionpower/mxnet-insightface-cpp/blob/master/demo.jpg" width = 60% height = 60%>
 </p>  
