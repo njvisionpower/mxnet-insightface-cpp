@@ -9,11 +9,6 @@
 ### 更新日志
 **2019-2-20  更新demo图片**
 
-# mxnet-insightface-cpp
-<p align="center"> 
-<img src="https://github.com/njvisionpower/mxnet-insightface-cpp/blob/master/demo.jpg" width = 60% height = 60%>
-</p>
-
 ### 环境
     1.CPU和GPU都可以，主要对CPU进行优化，GPU后面补上~
     2.编译的MXNet库，看情况开启MKL，MKL-DNN或者openblas加速，速度会有不小提升，另外还需要预编译的OpenCV
