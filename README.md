@@ -7,20 +7,32 @@
 </p>  
 
 *****
-This project implement an easy deployable face recognition pipeline with mxnet cpp framework.There are some awesome projects aim to train and design face recognition pipeline with python(like insightface), this project show how to deploy the pre-trained model to real production environment with mxnet-cpp. Compare with original python version, our implement has some optimization and speed improvement around 1/3.
+This project implement an easy deployable face recognition pipeline with mxnet c++ framework.There are some awesome projects aim to train and design face recognition pipeline with python(like insightface), this project show how to deploy the pre-trained model to real production environment with mxnet c++. Compare with original python version, our implement has some optimization and speed improvement around 1/3.
+
 ## Dependency lib
-    Mxnet and opencv library 
+MXNet and OpenCV library. In this project we use MXNet 1.3.0 and OpenCV 3.4.0. It will be also ok for other version, you can compiled with MKL-DNN, MKL or OpenBLAS to make MXNet calcuation faster.
+ 
 ## Operation
 #### Make labels
-    Extract features with images in "images" folder, and also will generate labels
+Extract features with images in "images" folder, and also will generate labels(in main function):
+
+    std::string path = "D:\\cpp\\mxnet_cpp\\mxnet_cpp\\image";   //according to your label images path;
+    test_make_label(path);                                       //make labels with split image name(e.g. penny.jpg -> penny)
+    
 #### Face recognition with camera
-    Extract features from camera image and compare distance with labeled features.
+Extract feature from camera image and compare distance with labeled features:
+
+    test_camera();                                               // do recognition task with usb camrea 
+    
+    
+You can see detail recognition pipeline in feature_extract.hpp recognition function
+
 ## Framework
 This project implement face recognition pipeline with mxnet c++, and currently mainly optimize on CPU. The whole framework contains:  
 ### 1. Face detect with MTCNN
-MTCNN is a cascade network with PNet, RNet and ONet. The first stage will sample with image pyramid.  
+We use the original version mtcnn to detect face(there are many re-design mtcnn model to make it faster with litttle accuracy lost,  will be not mentioned here). MTCNN is a cascade network with PNet, RNet and ONet. The first stage will sample with image pyramid.  
     
-**1**.Assume that most task get images from camera so the input size is fiexed, thus the number of scales and scale size for every image is also fixed, we can initiate number=scales predict handler to avoid frequently resize or reload which will cause much time overhead.  
+**1**.Assume that most task get images from camera so the input size is fiexed, thus the number of scales and scale size for every image is also fixed, we can initiate number=scales predict handler to avoid frequently resize or reload operation which will cause much time overhead.  
 **2**.The created predict handler for different scales can be easily implement with multi-thread to make speed up.  
         
 ### 2. Face alignment with similarity transformation
