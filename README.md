@@ -13,7 +13,7 @@ This project implement an easy deployable face recognition pipeline with mxnet c
 MXNet and OpenCV library. In this project we use MXNet 1.3.0/1.4.0 and OpenCV 4. It will be also ok for other version, you can compiled with MKL-DNN, MKL or OpenBLAS to make MXNet calcuation faster.
 ## How to run
 ### Windows
-Build with VS2015 or high version, add compiled opencv and mxnet lib to dependency lib and add opencv and mxnet include files.
+Build with VS2015 or higher version, add compiled opencv and mxnet lib to dependency lib and add opencv and mxnet include files.
 ### Linux
 Build with cmake.
 ```
