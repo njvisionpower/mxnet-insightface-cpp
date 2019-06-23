@@ -10,8 +10,18 @@
 This project implement an easy deployable face recognition pipeline with mxnet c++ framework.There are some awesome projects aim to train and design face recognition pipeline with python(like insightface), this project show how to deploy the pre-trained model to real production environment with mxnet c++. Compare with original python version, our implement has some optimization and speed improvement around 1/3.
 
 ## Dependency lib
-MXNet and OpenCV library. In this project we use MXNet 1.3.0 and OpenCV 3.4.0. It will be also ok for other version, you can compiled with MKL-DNN, MKL or OpenBLAS to make MXNet calcuation faster.
- 
+MXNet and OpenCV library. In this project we use MXNet 1.3.0/1.4.0 and OpenCV 4. It will be also ok for other version, you can compiled with MKL-DNN, MKL or OpenBLAS to make MXNet calcuation faster.
+## How to run
+### Windows
+Build with VS2015 or high version, add compiled opencv and mxnet lib to dependency lib and add opencv and mxnet include files.
+### Linux
+Build with cmake.
+```
+1.Create new directory with "mkdir build && cd build", also add your compiled mxnet and dependency lib under lib.
+2.Build with "cmake -D LINUX=ON .."
+3.Compile repo with make -j"$(nproc)"
+4.Run ./mxnet-insightface-cpp.
+```
 ## Operation
 #### Make labels
 Extract features with images in "images" folder, and also will generate labels(in main function):
