@@ -2,17 +2,22 @@
 #include <string>
 #include <vector>
 #include <opencv2/opencv.hpp>
+
+#ifdef LINUX
+#include<dirent.h>
+#else
 #include<io.h>
+#endif
 
 #include "mxnet_mtcnn.hpp"
 #include "feature_extract.hpp"
 
 
-
+#ifndef LINUX
 void getFiles(std::string path, std::vector<std::string>& files, std::vector<std::string> &ownname)
 {
 	long long hFile = 0;
-	
+
 	struct _finddata_t fileinfo;
 	std::string p;
 	if ((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1)
@@ -21,9 +26,7 @@ void getFiles(std::string path, std::vector<std::string>& files, std::vector<std
 		{
 
 			if ((fileinfo.attrib &  _A_SUBDIR))
-			{  /*
-			   if(strcmp(fileinfo.name,".") != 0  &&  strcmp(fileinfo.name,"..") != 0)
-			   getFiles( p.assign(path).append("\\").append(fileinfo.name), files, ownname ); */
+			{  
 			}
 			else
 			{
@@ -46,13 +49,32 @@ void getFiles(std::string path, std::vector<std::string>& files, std::vector<std
 		_findclose(hFile);
 	}
 }
+#else
+void getFiles(std::string path, std::vector<std::string>& files, std::vector<std::string> &ownname)
+{
+    DIR* dir = opendir(path.c_str());
+    dirent* p = NULL;
+    while((p = readdir(dir)) != NULL)
+    {
+        if(p->d_name[0] != '.')
+        {
+            std::string name = path + "/" + std::string(p->d_name);
+            std::cout << name << std::endl;
+            ownname.push_back(std::string(p->d_name));
+            files.push_back(name);
+            std::cout<<"name: "<<p->d_name<<", file:"<<name<<std::endl;
+        }
+    }
+    closedir(dir);
+}
+#endif
 
 void make_label(std::vector<std::string>images, std::vector<std::string>labels, std::string mtcnn_model, std::string params, std::string json)
 {
-	
+
 	cv::Mat features;
 	cv::Mat names;
-	
+
 	MxNetMtcnn mtcnn;
 	mtcnn.LoadModule(mtcnn_model);
 	Mxnet_extract extract;
@@ -61,7 +83,7 @@ void make_label(std::vector<std::string>images, std::vector<std::string>labels, 
 	cv::Mat src(5, 2, CV_32FC1, norm_face);
 
 	std::ofstream newfile("labels.txt");
-	
+
 	for (int i = 0; i < images.size(); i++)
 	{
 		std::cout << "extract feature for image: " << images[i] << std::endl;
@@ -72,7 +94,7 @@ void make_label(std::vector<std::string>images, std::vector<std::string>labels, 
 		newfile << tmp[0] << " ";
 
 		cv::Mat img = cv::imread(images[i]);
-		
+
 		std::vector<face_box> face_info;
 		mtcnn.Detect(img, face_info);
 
@@ -90,10 +112,10 @@ void make_label(std::vector<std::string>images, std::vector<std::string>labels, 
 
 		float v2[5][2] =
 		{ { face.landmark.x[0] , face.landmark.y[0] },
-		{ face.landmark.x[1] , face.landmark.y[1] },
-		{ face.landmark.x[2] , face.landmark.y[2] },
-		{ face.landmark.x[3] , face.landmark.y[3] },
-		{ face.landmark.x[4] , face.landmark.y[4] } };
+			{ face.landmark.x[1] , face.landmark.y[1] },
+			{ face.landmark.x[2] , face.landmark.y[2] },
+			{ face.landmark.x[3] , face.landmark.y[3] },
+			{ face.landmark.x[4] , face.landmark.y[4] } };
 
 		cv::Mat dst(5, 2, CV_32FC1, v2);
 
@@ -106,13 +128,13 @@ void make_label(std::vector<std::string>images, std::vector<std::string>labels, 
 		cv::Mat transfer = m(cv::Rect(0, 0, 3, 2));
 		std::cout << m << std::endl;
 		cv::warpAffine(img, aligned, transfer, size, 1, 0, 0);
-		
+
 		cv::Mat output = extract.extractFeature(aligned);
 		features.push_back(output);	
 
 	}
 
-	cv::FileStorage fs(".\\features.xml", cv::FileStorage::WRITE);
+	cv::FileStorage fs("../features.xml", cv::FileStorage::WRITE);
 	fs << "features" << features;
 	fs.release();
 

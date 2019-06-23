@@ -25,7 +25,7 @@ class_info classify(const cv::Mat& img, const  cv::Mat& cmp)
 
 	broad = broad - cmp;
 	cv::pow(broad,2,broad);
-	cv::reduce(broad, broad, 1, CV_REDUCE_SUM);
+	cv::reduce(broad, broad, 1, cv::REDUCE_SUM);
 
 	double dis;
 	cv::Point point;

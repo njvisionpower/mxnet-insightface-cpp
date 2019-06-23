@@ -10,7 +10,7 @@ void save_float(const char * name, const float * data, int size)
 {
 	char fname[128];
 
-	sprintf_s(fname, "%s", name);
+	sprintf(fname, "%s", name);
 
 	std::cout << "save data to " << fname << "   size " << size << std::endl;
 	std::ofstream of;
@@ -37,7 +37,7 @@ void save_img(const char * name, void * p_img)
 
 	int data;
 
-	sprintf_s(fname, "%s", name);
+	sprintf(fname, "%s", name);
 
 	std::cout << "save data to " << fname << "   size " << sz << std::endl;
 	std::ofstream of;

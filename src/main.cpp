@@ -71,7 +71,7 @@ void test_camera()
 	extract.LoadExtractModule("../feature_model/model-0000.params", "../feature_model/model-symbol.json", 1, 3, 112, 112);
 
 	//loading features
-	cv::FileStorage fs("features.xml", cv::FileStorage::READ);
+	cv::FileStorage fs("../features.xml", cv::FileStorage::READ);
 	cv::Mat features;
 	fs["features"] >> features;
 
@@ -101,8 +101,8 @@ void test_camera()
 
 		if (frame.empty())
 			break;
-		cv::imshow("frame", frame);
-		cv::waitKey(1);
+		//cv::imshow("frame", frame);
+		//cv::waitKey(1);
 		
 	}
 	cap.release();
@@ -112,10 +112,11 @@ void test_camera()
 int main(int argc, char* argv[]) {
 
 	//test_mtcnn();
-	//std::string path = "D:\\cpp\\mxnet_cpp\\mxnet_cpp\\image";
+	//std::string path = "../image";
 	//test_make_label(path);
 
 	test_camera();
+
 	system("pause");
 	return 0;
 }
