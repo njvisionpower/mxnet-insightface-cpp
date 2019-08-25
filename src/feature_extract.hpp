@@ -140,7 +140,7 @@ public:
 
 		MXPredGetOutput(pred_feature, 0, feature.data(), feature_size);
 		
-		cv::Mat output = cv::Mat(feature).reshape(1, 1);
+		cv::Mat output = cv::Mat(feature, true).reshape(1, 1);
 		cv::normalize(output, output);
 	
 		return output;
